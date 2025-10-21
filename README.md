@@ -1,6 +1,18 @@
 KipuBank V2 es un contrato inteligente de Solidity que implementa un banco descentralizado multi-token, capaz de aceptar depósitos y retiros en ETH y tokens ERC-20, con límites de retiro y capacidad global expresados en USD, gracias a oráculos de precios Chainlink.
 El contrato introduce mejoras significativas respecto a versiones anteriores, orientadas a seguridad, trazabilidad y escalabilidad.# KipuBankV2
 
+Mejoras implementadas
+
+Soporte multi-token: ahora es posible habilitar dinámicamente diferentes tokens ERC-20, cada uno asociado a su propio oráculo de precios.
+Control de acceso con AccessControl: se definieron roles administrativos (ADMIN_ROLE) para restringir operaciones críticas como agregar tokens o modificar configuraciones.
+Límites globales expresados en USD: tanto la capacidad total del banco como el máximo retiro por operación se expresan en dólares, utilizando oráculos para convertir los valores de cada token.
+Integración con Chainlink Price Feeds: se utilizan feeds de precios en tiempo real para calcular equivalencias de ETH o tokens a USD.
+Contabilidad normalizada: todos los valores se manejan internamente con 6 decimales, similar a USDC, lo que facilita las operaciones entre tokens con distintos decimales.
+Parámetros inmutables: los límites (withdrawalThresholdUSD y bankCapUSD) se fijan en el constructor y no pueden modificarse luego, asegurando transparencia.
+Errores personalizados: en lugar de require() genéricos, se emplean errores con nombre, lo que mejora la legibilidad y optimiza el consumo de gas.
+Eventos detallados: se registran todas las operaciones relevantes (depósitos, retiros, tokens agregados) para facilitar auditorías y monitoreo.
+Protección contra reentradas: mediante ReentrancyGuard, se asegura que no haya vulnerabilidades al realizar transferencias externas.
+
 Instrucciones de despliegue
 Requisitos previos
 
